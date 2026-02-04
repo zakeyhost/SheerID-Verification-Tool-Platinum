@@ -645,7 +645,8 @@ def generate_transcript(first: str, last: str, school: str, dob: str) -> bytes:
         pass
 
     buf = BytesIO()
-    img.save(buf, format="PNG")
+    # Save as JPEG with 85% quality to simulate camera compression
+    img.save(buf, format="JPEG", quality=random.randint(80, 90))
     return buf.getvalue()
 
 
@@ -731,7 +732,8 @@ def generate_student_id(first: str, last: str, school: str) -> bytes:
         pass
 
     buf = BytesIO()
-    img.save(buf, format="PNG")
+    # Save as JPEG with 85% quality to simulate camera compression
+    img.save(buf, format="JPEG", quality=random.randint(80, 90))
     return buf.getvalue()
 
 
@@ -977,8 +979,8 @@ class GeminiVerifier:
             upload_body = {
                 "files": [
                     {
-                        "fileName": filename,
-                        "mimeType": "image/png",
+                        "fileName": filename.replace(".png", ".jpg"),
+                        "mimeType": "image/jpeg",
                         "fileSize": len(doc),
                     }
                 ]

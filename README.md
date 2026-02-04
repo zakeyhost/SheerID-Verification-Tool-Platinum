@@ -1,49 +1,65 @@
-# SheerID Verification Tool Platinum Edition
+SheerID Verification Tool - Platinum Edition
 
-Repositori ini berisi alat verifikasi SheerID tingkat lanjut yang dirancang untuk efisiensi dan keamanan data optimal. Sistem ini menggunakan arsitektur modern untuk memastikan proses verifikasi berjalan lancar dan sulit terdeteksi oleh sistem keamanan standar.
+Repositori ini berisi alat verifikasi SheerID yang dioptimalkan untuk layanan Gemini AI dan YouTube Premium. Versi Platinum ini fokus pada keamanan stealth dan kualitas dokumen yang dihasilkan agar lolos verifikasi otomatis maupun manual.
 
----
+FITUR UTAMA
 
-## Fitur Utama Platinum
+1. Advanced Anti-Detection
+Menggunakan library curl_cffi untuk meniru fingerprint browser Chrome asli. Ini membuat trafik bot tidak terdeteksi sebagai script Python oleh firewall Cloudflare atau Akamai.
 
-**Advanced Anti Detection**
-Penggunaan library `curl_cffi` memungkinkan impersonasi TLS yang akurat sehingga trafik terlihat seperti berasal dari browser Chrome asli. Fitur ini secara signifikan meningkatkan tingkat keberhasilan verifikasi dibandingkan dengan metode standar.
+2. Realistic Document Generator
+Modul doc_enhancer.py dirancang untuk membuat dokumen (Transkrip/KTM) yang terlihat seperti hasil scan atau foto kamera HP.
+- Menambahkan noise (bintik) pada gambar.
+- Rotasi kemiringan acak (glitch effect) agar tidak terlihat terlalu simetris.
+- Injeksi siluet foto profil untuk menghindari deteksi AI pada kartu identitas.
+- Format output JPEG dengan kompresi yang menyerupai kamera asli.
 
-**Behavioral Simulation**
-Sistem mengimplementasikan simulasi perilaku manusia saat mengisi formulir. Proses ini mencakup variasi kecepatan input dan jeda waktu yang dinamis untuk menghindari pemicu deteksi bot otomatis.
+3. Telegram Bot Integration
+Fitur bot Telegram pribadi untuk memudahkan eksekusi tanpa perlu membuka terminal setiap saat. Cukup kirim link verifikasi ke bot, dan proses akan berjalan di background.
 
-**Efficient SSO Bypass**
-Integrasi khusus pada endpoint `DELETE /step/sso` memungkinkan bypass proses Single Sign-On yang tidak diperlukan. Hal ini mempercepat alur kerja verifikasi secara keseluruhan.
+4. Optimization
+- Bypass SSO (Login Portal Kampus) secara otomatis.
+- Menggunakan database universitas dengan tingkat keberhasilan tinggi.
 
-**Dynamic Document Generation**
-Modul `doc_generator.py` mampu menghasilkan dokumen verifikasi dengan teknik noise injection. Setiap dokumen memiliki karakteristik unik untuk mencegah deteksi duplikasi oleh sistem pemindaian pihak ketiga.
+INSTALASI
 
-**University Database Support**
-Dukungan penuh telah dioptimasi untuk Arizona State University serta daftar institusi pendidikan global lainnya yang memiliki tingkat kepercayaan tinggi.
+Pastikan Python 3.10 ke atas sudah terinstall.
 
----
+1. Clone repositori dan masuk ke direktori folder.
+2. Buat virtual environment (opsional tapi disarankan):
+   python -m venv .venv
+   source .venv/bin/activate
+3. Install dependencies:
+   pip install -r requirements.txt
+   (atau manual: pip install httpx Pillow curl_cffi python-dotenv python-telegram-bot faker numpy requests)
 
-## Panduan Instalasi dan Penggunaan
+KONFIGURASI
 
-**Persyaratan Sistem**
-Pastikan Python telah terinstall di lingkungan kerja Anda kemudian jalankan perintah berikut untuk memasang dependensi yang diperlukan
-```bash
-pip install httpx Pillow curl_cffi python-dotenv
-```
+Buat file bernama .env di dalam folder utama, lalu isi dengan format berikut:
 
-**Menjalankan Program**
-Eksekusi script utama melalui terminal dengan perintah
-```bash
-python3 main_v2.py
-```
+PROXY_URL=http://user:pass@ip:port
+TELEGRAM_BOT_TOKEN=token_bot_anda_disini
 
----
+PENGGUNAAN
 
-## Spesifikasi Teknis
+Ada dua cara untuk menggunakan alat ini:
 
-Sistem ini dikembangkan berdasarkan riset mendalam terhadap protokol keamanan SheerID terbaru. Seluruh metadata seperti ClientVersion dan NewRelic ID selalu diperbarui secara berkala menyesuaikan standar industri tahun 2026.
+Cara 1: Mode Terminal (Manual)
+Jalankan perintah ini di terminal untuk memproses satu link:
+python main_v2.py "LINK_VERIFIKASI_SHEERID"
 
-Fokus utama dari edisi Platinum ini adalah memberikan solusi verifikasi yang stabil, aman, dan memprioritaskan privasi pengguna melalui logika stealth yang ketat.
+Cara 2: Mode Bot Telegram (Otomatis)
+Jalankan bot di server/local:
+python telegram_bot.py
 
----
-*Dikembangkan untuk profesional yang mengutamakan reliabilitas dan kecepatan.*
+Setelah bot berjalan, buka Telegram dan kirim perintah:
+/verify LINK_VERIFIKASI_SHEERID
+
+ALAT TAMBAHAN
+
+verify_readiness.py
+Script untuk mengecek apakah semua library dan fungsi generator dokumen berjalan normal sebelum melakukan eksekusi asli. Sangat disarankan dijalankan pertama kali.
+
+DISCLAIMER
+
+Alat ini dibuat untuk tujuan riset keamanan dan edukasi. Segala risiko penggunaan menjadi tanggung jawab pengguna.

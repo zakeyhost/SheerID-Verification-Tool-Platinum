@@ -56,15 +56,15 @@ def test_doc_generation():
         
         # Test Transcript
         t_doc = generate_transcript("Test", "User", "Harvard University", "2002-01-01")
-        with open(test_dir / "test_transcript.png", "wb") as f:
+        with open(test_dir / "test_transcript.jpg", "wb") as f:
             f.write(t_doc)
-        print_status(f"Transcript generated: {test_dir}/test_transcript.png", "SUCCESS")
+        print_status(f"Transcript generated: {test_dir}/test_transcript.jpg", "SUCCESS")
         
         # Test Student ID
         s_doc = generate_student_id("Test", "User", "Harvard University")
-        with open(test_dir / "test_student_id.png", "wb") as f:
+        with open(test_dir / "test_student_id.jpg", "wb") as f:
             f.write(s_doc)
-        print_status(f"Student ID generated: {test_dir}/test_student_id.png", "SUCCESS")
+        print_status(f"Student ID generated: {test_dir}/test_student_id.jpg", "SUCCESS")
         
     except Exception as e:
         print_status(f"Document generation failed: {e}", "ERROR")
