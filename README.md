@@ -21,13 +21,13 @@ graph TD
     Validator -->|Yes| Bypass[Deep Bypass Protocol]
     
     subgraph "CORE ENGINE"
-    Bypass -->|3. Force New Session| Warmer[Session Warming <br/>(Human Behavior Sim)]
-    Warmer -->|4. Rotate Identity| Gen[Identity Generator <br/>(Univ Rotation)]
-    Gen -->|5. Inject Payload| API[SheerID API <br/>(TLS Spoofing)]
+    Bypass -->|3. Force New Session| Warmer["Session Warming\n(Human Behavior Sim)"]
+    Warmer -->|4. Rotate Identity| Gen["Identity Generator\n(Univ Rotation)"]
+    Gen -->|5. Inject Payload| API["SheerID API\n(TLS Spoofing)"]
     end
     
     API -->|Response| Check{Status?}
-    Check -->|Success| Green([VERIFIED <br/>Get Reward Code])
+    Check -->|Success| Green([VERIFIED\nGet Reward Code])
     Check -->|SSO| Skip[SSO Bypass Module]
     Skip --> API
     Check -->|Fail| Red
