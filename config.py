@@ -3,8 +3,8 @@ Configuration settings for SheerID Verification Bot
 """
 import os
 
-# Telegram Bot Token (Replace with your token from @BotFather)
-BOT_TOKEN = "7840853625:AAHoX1eNG1XDeBmDA9MYG9_5hW8pjYvaHqM"
+# Telegram Bot Token (Loaded from .env for security)
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
 # SheerID API Settings
 SHEERID_API_URL = "https://services.sheerid.com/rest/v2"
