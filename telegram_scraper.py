@@ -4,16 +4,20 @@ Telegram Scraper - Mengumpulkan info dari grup/channel Telegram
 """
 
 import asyncio
+import os
 from telethon import TelegramClient
 from telethon.tl.functions.messages import GetHistoryRequest
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import Channel, Chat, User
 import json
 from datetime import datetime
+from dotenv import load_dotenv
 
-# API Credentials
-API_ID = 37085237
-API_HASH = "a93561cdb69753df66b918e886b6daa7"
+load_dotenv()
+
+# API Credentials from environment
+API_ID = int(os.getenv("TELEGRAM_API_ID", "0"))
+API_HASH = os.getenv("TELEGRAM_API_HASH", "")
 
 # Session file
 SESSION_NAME = "telegram_session"
