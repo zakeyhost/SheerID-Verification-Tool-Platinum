@@ -185,34 +185,29 @@ class SheerIDClient:
         return {"status": "TIMEOUT", "last_details": details}
 
     def process_verification(self, input_id, is_program_id, student_data, doc_generator_func=None):
-        """Full automated flow with Session Warming"""
-        verification_id = input_id
+        """Full automated flow with Deep Bypass & Auto-Regeneration"""
+        # --- DEEP BYPASS: Always Force CLEAN Session ---
+        program_id = "67c8c14f5f17a83b745e3f82" # Default Gemini
         
-        if is_program_id:
-            verification_id = self.start_verification(input_id)
-            if not verification_id:
-                return {"status": "FAILED", "reason": "COULD_NOT_START_SESSION"}
+        # Force regenerate a new ID regardless of what the user sent
+        # This bypasses tainted sessions from mobile/wrong IPs
+        verification_id = self.start_verification(program_id)
+        
+        if not verification_id:
+            verification_id = input_id
 
-        # --- SESSION WARMING (Mimic real browser) ---
-        print(f"[*] Warming up session for {verification_id}...")
-        landing_url = f"https://services.sheerid.com/verify/67c8c14f5f17a83b745e3f82/?verificationId={verification_id}"
+        print(f"[*] DEEP BYPASS INITIATED: Fresh Session {verification_id}")
+        
+        # Session Warming
+        landing_url = f"https://services.sheerid.com/verify/{program_id}/?verificationId={verification_id}"
         try:
-             # Load the page to get Cookies
              self.session.get(landing_url, headers=anti_detect.get_headers(for_sheerid=False))
-             # Small delay to simulate "form loading"
-             anti_detect.random_delay(2000, 4000)
-        except:
-             pass
+             anti_detect.random_delay(1500, 3000)
+        except: pass
 
-        print(f"[*] Processing verification: {verification_id}")
-        
-        # 1. Submit Info
-        print(f"[*] Submitting info for {student_data['display_info']['full_name']} at {student_data['display_info']['university']}")
+        # Submit Info
+        print(f"[*] Submitting Payload: {student_data[display_info][full_name]}")
         result = self.submit_student_info(verification_id, student_data)
-        
-        current_step = result.get("currentStep")
-        print(f"[*] Step 1 Result: {current_step}")
-        
         # Handle Instant Error
         if current_step == "error" or not current_step:
             print("[!] Step 1 returned error. Checking actual state...")

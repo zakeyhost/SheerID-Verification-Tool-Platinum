@@ -24,10 +24,18 @@ def generate_student_profile(university=None):
     dob_date = datetime.now() - timedelta(days=age*365 + random.randint(0, 364))
     birth_date = dob_date.strftime("%Y-%m-%d")
     
-    # Generate PSU Email: first.last + 3-4 digits + @psu.edu
-    # Logic extracted from reference bot
-    digits = "".join([str(random.randint(0, 9)) for _ in range(random.choice([3, 4]))])
-    email = f"{first_name.lower()}.{last_name.lower()}{digits}@psu.edu"
+    # Generate Email based on University Domain
+    domain = university.get("domain", "edu")
+    digits = "".join([str(random.randint(0, 9)) for _ in range(random.choice([2, 3]))])
+    
+    # Randomize email format: first.last / f.last / firstl
+    fmt = random.choice(["dot", "shrd", "fl"])
+    if fmt == "dot":
+         email = f"{first_name.lower()}.{last_name.lower()}{digits}@{domain}"
+    elif fmt == "shrd":
+         email = f"{first_name[0].lower()}{last_name.lower()}{digits}@{domain}"
+    else:
+         email = f"{first_name.lower()}{last_name[0].lower()}{digits}@{domain}"
     
     return {
         "firstName": first_name,

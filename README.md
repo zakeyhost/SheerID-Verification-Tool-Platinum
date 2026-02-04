@@ -1,18 +1,37 @@
-![Platinum Banner](platinum_banner.png)
-
 # SHEERID VERIFICATION TOOL
 ### PLATINUM EDITION — RELEASE 2.0
 
-> **Sistem verifikasi otomatis tingkat lanjut dengan bypass anti-fraud dan generator dokumen ultra-realistis.**
+> **Automated stealth verification system with TLS fingerprinting and University rotation logic.**
+
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Telegram](https://img.shields.io/badge/Telegram-Bot_API-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
+![Security](https://img.shields.io/badge/Bypass-Deep_Stealth-FF4B4B?style=for-the-badge&logo=tor-browser&logoColor=white)
+![Status](https://img.shields.io/badge/System-ONLINE-brightgreen?style=for-the-badge)
 
 ---
-### TECH STACK
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
-![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
-![Pillow](https://img.shields.io/badge/Pillow-image_processing-blue?style=for-the-badge)
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
+
+## ⚙️ SYSTEM ARCHITECTURE (LOGIC FLOW)
+
+```mermaid
+graph TD
+    User([USER]) -->|1. Submit Link| Bot[Telegram Bot Engine]
+    Bot -->|2. Extract ID| Validator{Valid ID?}
+    
+    Validator -->|No| Red[Error: Invalid Link]
+    Validator -->|Yes| Bypass[Deep Bypass Protocol]
+    
+    subgraph "CORE ENGINE"
+    Bypass -->|3. Force New Session| Warmer[Session Warming <br/>(Human Behavior Sim)]
+    Warmer -->|4. Rotate Identity| Gen[Identity Generator <br/>(Univ Rotation)]
+    Gen -->|5. Inject Payload| API[SheerID API <br/>(TLS Spoofing)]
+    end
+    
+    API -->|Response| Check{Status?}
+    Check -->|Success| Green([VERIFIED <br/>Get Reward Code])
+    Check -->|SSO| Skip[SSO Bypass Module]
+    Skip --> API
+    Check -->|Fail| Red
+```
 
 ---
 

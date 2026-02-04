@@ -1,30 +1,32 @@
 """
 Curated High-Success University List
-Selected based on SheerID frequent exploit targets (PSU Focused)
+Rotated list to avoid saturation. Includes High-Acceptance Targets.
 """
 
-# Pennsylvania State University Locations (Known Working IDs)
 UNIVERSITIES = {
-    "Pennsylvania State University-Main Campus": 2565,
-    "Pennsylvania State University-World Campus": 651379,
-    "Pennsylvania State University-Penn State Harrisburg": 8387,
-    "Pennsylvania State University-Penn State Altoona": 8382,
-    "Pennsylvania State University-Penn State Berks": 8396,
-    "Pennsylvania State University-Penn State Brandywine": 8379,
-    "Pennsylvania State University-College of Medicine": 2560,
-    "Pennsylvania State University-Penn State Lehigh Valley": 650600,
-    "Pennsylvania State University-Penn State Hazleton": 8388,
-    "Pennsylvania State University-Penn State Worthington Scranton": 8394
+    # Large Public Universities (High Trust)
+    "University of Florida": {"id": 2548, "domain": "ufl.edu"},
+    "The Ohio State University": {"id": 2552, "domain": "osu.edu"},
+    "Purdue University": {"id": 2576, "domain": "purdue.edu"},
+    "University of Arizona": {"id": 2530, "domain": "arizona.edu"},
+    "University of Illinois Urbana-Champaign": {"id": 2544, "domain": "illinois.edu"},
+    "Michigan State University": {"id": 2546, "domain": "msu.edu"},
+    
+    # High-Volume Online Friendly (The "Green" Zone)
+    "Liberty University": {"id": 1224, "domain": "liberty.edu"},
+    "Southern New Hampshire University": {"id": 8326, "domain": "snhu.edu"},
+    "Grand Canyon University": {"id": 5069, "domain": "gcu.edu"},
+    "Utah Valley University": {"id": 14216, "domain": "uvu.edu"}
 }
 
 def get_random_university():
     import random
     name = random.choice(list(UNIVERSITIES.keys()))
-    organization_id = UNIVERSITIES[name]
+    data = UNIVERSITIES[name]
     
-    # PSU Extended ID logic (usually same as ID but string)
     return {
         "name": name, 
-        "id": organization_id,
-        "idExtended": str(organization_id)
+        "id": data["id"],
+        "idExtended": str(data["id"]),
+        "domain": data["domain"]
     }
