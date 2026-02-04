@@ -58,7 +58,7 @@ async def verify_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Initialize API
     client = sheerid_api.SheerIDClient(proxy=config.PROXY_URL if config.USE_PROXY else None)
     
-    verification_id = client.extract_verification_id_from_url(url)
+    verification_id, is_program = client.extract_verification_id_from_url(url)
     if not verification_id:
         await update.message.reply_text("❌ Invalid link! Could not find verification ID.")
         return
@@ -97,7 +97,7 @@ async def verify_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
                  # Need DOB for transcript
                  return doc_generator.generate_transcript(first, last, profile["birthDate"], school)
 
-        result = client.process_verification(verification_id, profile, doc_gen_wrapper)
+        result = client.process_verification(verification_id, is_program, profile, doc_gen_wrapper)
         
         # Step 3: Handle Result
         if result["status"] == "SUCCESS":
@@ -117,7 +117,24 @@ async def verify_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await status_msg.edit_text(success_text, parse_mode=ParseMode.MARKDOWN)
             
         elif result["status"] == "TIMEOUT":
-             await status_msg.edit_text("⚠️ Verification timed out. Please check the link manually.", parse_mode=ParseMode.MARKDOWN)
+             last_step = result.get("last_details", {}).get("currentStep")
+             if last_step == "pending":
+                  await status_msg.edit_text(
+                      f"⏳ **Under Manual Review**\n\n"
+                      f"✅ Documents Submitted Successfully.\n"
+                      f"The verification is pending review by SheerID.\n"
+                      f"🤖 **I will notify you automatically when it finishes!** (Monitoring for 30 mins)\n"
+                      f"Please check this link manually if I don't respond:\n"
+                      f"`{url}`",
+                      parse_mode=ParseMode.MARKDOWN
+                  )
+                  
+                  # Spawn background monitor
+                  import subprocess
+                  subprocess.Popen(["python3", "monitor_task.py", verification_id, str(update.effective_chat.id)])
+                  
+             else:
+                  await status_msg.edit_text("⚠️ Verification timed out. Please check the link manually.", parse_mode=ParseMode.MARKDOWN)
         
         else:
             error_codes = result.get("errors", result.get("reason", "Unknown"))

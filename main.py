@@ -25,8 +25,7 @@ def cli_verification(link):
     
     client = sheerid_api.SheerIDClient(proxy=config.PROXY_URL if config.USE_PROXY else None)
     
-    # 1. Extract ID
-    verification_id = client.extract_verification_id_from_url(link)
+    verification_id, is_program = client.extract_verification_id_from_url(link)
     if not verification_id:
         print("❌ Error: Invalid URL. Could not extract verification ID.")
         return
@@ -51,7 +50,7 @@ def cli_verification(link):
          else:
              return doc_generator.generate_transcript(first, last, profile["birthDate"], school)
 
-    result = client.process_verification(verification_id, profile, doc_gen_wrapper)
+    result = client.process_verification(verification_id, is_program, profile, doc_gen_wrapper)
     
     print("\n" + "="*60)
     print(f"RESULT: {result['status']}")

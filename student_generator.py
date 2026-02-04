@@ -1,6 +1,6 @@
 """
 Student Data Generator for SheerID Verification
-Generates realistic student profiles
+Generates realistic student profiles (PSU Pattern)
 """
 from faker import Faker
 import random
@@ -9,11 +9,9 @@ import universities
 
 fake = Faker('en_US')
 
-DOMAIN_SUFFIXES = ["edu", "college.edu", "univ.edu", "student.edu"]
-
 def generate_student_profile(university=None):
     """
-    Generate a full student profile
+    Generate a full student profile with PSU-specific email format
     """
     if not university:
         university = universities.get_random_university()
@@ -26,23 +24,10 @@ def generate_student_profile(university=None):
     dob_date = datetime.now() - timedelta(days=age*365 + random.randint(0, 364))
     birth_date = dob_date.strftime("%Y-%m-%d")
     
-    # Clean university name for email
-    school_slug = university["name"].lower().replace(",", "").replace(" ", "").replace("-", "")
-    if "university" in school_slug:
-        school_slug = school_slug.replace("university", "")
-    elif "college" in school_slug:
-        school_slug = school_slug.replace("college", "")
-        
-    # Generate email
-    # Patterns: first.last@uni.edu, f.last@uni.edu, last.first@uni.edu
-    email_pattern = random.choice([
-        f"{first_name.lower()}.{last_name.lower()}",
-        f"{first_name[0].lower()}{last_name.lower()}",
-        f"{first_name.lower()}{last_name.lower()}{random.randint(10,99)}"
-    ])
-    
-    domain_suffix = random.choice(DOMAIN_SUFFIXES)
-    email = f"{email_pattern}@{school_slug}.{domain_suffix}"
+    # Generate PSU Email: first.last + 3-4 digits + @psu.edu
+    # Logic extracted from reference bot
+    digits = "".join([str(random.randint(0, 9)) for _ in range(random.choice([3, 4]))])
+    email = f"{first_name.lower()}.{last_name.lower()}{digits}@psu.edu"
     
     return {
         "firstName": first_name,
@@ -61,5 +46,4 @@ def generate_student_profile(university=None):
     }
 
 if __name__ == "__main__":
-    # Test generator
     print(generate_student_profile())

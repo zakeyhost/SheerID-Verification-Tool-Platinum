@@ -57,7 +57,12 @@ def generate_newrelic_headers():
 def get_headers(for_sheerid=True):
     headers = {"accept": "application/json", "user-agent": get_random_user_agent()}
     if for_sheerid:
-        headers.update({"clientversion": "2.178.0", "clientname": "jslib", **generate_newrelic_headers()})
+        headers.update({
+            "clientversion": "2.193.0",
+            "clientname": "jslib",
+            "x-sheerid-target-platform": "web",
+            **generate_newrelic_headers()
+        })
     return headers
 
 def random_delay(min_ms=300, max_ms=1200): time.sleep(random.randint(min_ms, max_ms) / 1000)
