@@ -2,6 +2,10 @@
 Configuration settings for SheerID Verification Bot
 """
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Telegram Bot Token (Loaded from .env for security)
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
