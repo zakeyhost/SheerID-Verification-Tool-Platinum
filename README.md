@@ -1,65 +1,83 @@
-SheerID Verification Tool - Platinum Edition
+![Platinum Banner](platinum_banner.png)
 
-Repositori ini berisi alat verifikasi SheerID yang dioptimalkan untuk layanan Gemini AI dan YouTube Premium. Versi Platinum ini fokus pada keamanan stealth dan kualitas dokumen yang dihasilkan agar lolos verifikasi otomatis maupun manual.
+# SHEERID VERIFICATION TOOL
+### PLATINUM EDITION — RELEASE 2.0
 
-FITUR UTAMA
+> **Sistem verifikasi otomatis tingkat lanjut dengan bypass anti-fraud dan generator dokumen ultra-realistis.**
 
-1. Advanced Anti-Detection
-Menggunakan library curl_cffi untuk meniru fingerprint browser Chrome asli. Ini membuat trafik bot tidak terdeteksi sebagai script Python oleh firewall Cloudflare atau Akamai.
+---
+### TECH STACK
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
+![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
+![Pillow](https://img.shields.io/badge/Pillow-image_processing-blue?style=for-the-badge)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 
-2. Realistic Document Generator
-Modul doc_enhancer.py dirancang untuk membuat dokumen (Transkrip/KTM) yang terlihat seperti hasil scan atau foto kamera HP.
-- Menambahkan noise (bintik) pada gambar.
-- Rotasi kemiringan acak (glitch effect) agar tidak terlihat terlalu simetris.
-- Injeksi siluet foto profil untuk menghindari deteksi AI pada kartu identitas.
-- Format output JPEG dengan kompresi yang menyerupai kamera asli.
+---
 
-3. Telegram Bot Integration
-Fitur bot Telegram pribadi untuk memudahkan eksekusi tanpa perlu membuka terminal setiap saat. Cukup kirim link verifikasi ke bot, dan proses akan berjalan di background.
+## CORE CAPABILITIES
 
-4. Optimization
-- Bypass SSO (Login Portal Kampus) secara otomatis.
-- Menggunakan database universitas dengan tingkat keberhasilan tinggi.
+### STEALTH AND ANTI DETECT
+Sistem ini tidak menggunakan Selenium atau browser automation yang mudah terdeteksi.
 
-INSTALASI
+*   **TLS Spoofing** - Menggunakan `curl_cffi` untuk meniru fingerprint kriptografi Chrome 131 secara identik.
+*   **Header Rotation** - Rotasi User-Agent dan Header Order dinamis untuk menghindari tracking statis.
+*   **IP Masking** - Integrasi proxy residential untuk menyamarkan lokasi asli.
 
-Pastikan Python 3.10 ke atas sudah terinstall.
+### REALISTIC DOCUMENT FORGERY
+Generator dokumen cerdas yang dirancang untuk mengelabui sistem verifikasi visual.
 
-1. Clone repositori dan masuk ke direktori folder.
-2. Buat virtual environment (opsional tapi disarankan):
-   python -m venv .venv
-   source .venv/bin/activate
-3. Install dependencies:
-   pip install -r requirements.txt
-   (atau manual: pip install httpx Pillow curl_cffi python-dotenv python-telegram-bot faker numpy requests)
+*   **JPEG Artifacts** - Output gambar memiliki kompresi natural layaknya foto kamera HP.
+*   **Organic Imperfections** - Menambahkan efek rotasi, noise bintik film, dan pencahayaan tidak merata.
+*   **Silhouette Injection** - Kartu identitas dilengkapi siluet manusia realistis.
 
-KONFIGURASI
+### TELEGRAM BOT INTERFACE
+Kontrol full sistem verifikasi dari aplikasi Telegram.
 
-Buat file bernama .env di dalam folder utama, lalu isi dengan format berikut:
+*   **One Click Verify** - Kirim link dan bot memproses di background.
+*   **Real time Status** - Notifikasi langsung saat verifikasi sukses atau butuh tindakan manual.
 
-PROXY_URL=http://user:pass@ip:port
-TELEGRAM_BOT_TOKEN=token_bot_anda_disini
+---
 
-PENGGUNAAN
+## DEPLOYMENT GUIDE
 
-Ada dua cara untuk menggunakan alat ini:
+### PREREQUISITES
+Pastikan Python 3.10+ sudah terinstall.
 
-Cara 1: Mode Terminal (Manual)
-Jalankan perintah ini di terminal untuk memproses satu link:
-python main_v2.py "LINK_VERIFIKASI_SHEERID"
+```bash
+# Clone Repository & Setup Environment
+git clone https://github.com/privatesector/sheerid-platinum.git
+python -m venv .venv
+source .venv/bin/activate
 
-Cara 2: Mode Bot Telegram (Otomatis)
-Jalankan bot di server/local:
-python telegram_bot.py
+# Install Dependencies
+pip install -r requirements.txt
+```
 
-Setelah bot berjalan, buka Telegram dan kirim perintah:
-/verify LINK_VERIFIKASI_SHEERID
+### CONFIGURATION
+Buat file `.env` untuk menyimpan akses kunci.
 
-ALAT TAMBAHAN
+```ini
+PROXY_URL=http://user:pass@residential-proxy.com:port
+TELEGRAM_BOT_TOKEN=123456789:ABCDefGHIjkLmnOPqrstUVwxyz
+TELEGRAM_API_ID=12345
+TELEGRAM_API_HASH=abcdef12345
+```
 
-verify_readiness.py
-Script untuk mengecek apakah semua library dan fungsi generator dokumen berjalan normal sebelum melakukan eksekusi asli. Sangat disarankan dijalankan pertama kali.
+---
 
-DISCLAIMER
+## OPERATION MODES
 
-Alat ini dibuat untuk tujuan riset keamanan dan edukasi. Segala risiko penggunaan menjadi tanggung jawab pengguna.
+| MODE | COMMAND | FUNGSI |
+| :--- | :--- | :--- |
+| **BOT AUTO** | `python telegram_bot.py` | Menjalankan server bot Telegram. |
+| **CLI MANUAL** | `python main_v2.py "URL"` | Memproses satu link secara manual. |
+| **DIAGNOSTIC** | `python verify_readiness.py` | Self check sistem sebelum eksekusi. |
+
+---
+
+## DISCLAIMERS
+> *Tool ini dikembangkan semata-mata untuk keperluan riset keamanan dan pengujian sistem. Pengembang tidak bertanggung jawab atas penyalahgunaan fitur yang ada di dalamnya.*
+
+**COPYRIGHT 2026 PLATINUM DEV TEAM**
