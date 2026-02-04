@@ -636,9 +636,18 @@ def generate_transcript(first: str, last: str, school: str, dob: str) -> bytes:
         anchor="mm",
     )
 
+    # 7. Post-processing (Realism)
+    try:
+        import doc_enhancer
+        img = doc_enhancer.add_noise(img)
+        img = doc_enhancer.add_glitch(img)
+    except:
+        pass
+
     buf = BytesIO()
     img.save(buf, format="PNG")
     return buf.getvalue()
+
 
 
 def generate_student_id(first: str, last: str, school: str) -> bytes:
@@ -673,11 +682,14 @@ def generate_student_id(first: str, last: str, school: str) -> bytes:
         (w // 2, 40), school.upper(), fill=(255, 255, 255), font=font_lg, anchor="mm"
     )
 
-    # Photo placeholder
-    draw.rectangle(
-        [(30, 100), (160, 280)], outline=(100, 100, 100), width=2, fill=(220, 220, 220)
-    )
-    draw.text((95, 190), "PHOTO", fill=(150, 150, 150), font=font_md, anchor="mm")
+    # 1. Photo silhouette (Realism!)
+    photo_box = [30, 100, 160, 280]
+    try:
+        import doc_enhancer
+        doc_enhancer.draw_avatar_silhouette(draw, photo_box)
+    except:
+        draw.rectangle(photo_box, outline=(100, 100, 100), width=2, fill=(220, 220, 220))
+        draw.text((95, 190), "PHOTO", fill=(150, 150, 150), font=font_md, anchor="mm")
 
     # Info
     x_info = 190
@@ -710,9 +722,18 @@ def generate_student_id(first: str, last: str, school: str) -> bytes:
         if random.random() > 0.3:
             draw.rectangle([(x, 330), (x + 8, 370)], fill=(0, 0, 0))
 
+    # Realism - Noise & Rotation
+    try:
+        import doc_enhancer
+        img = doc_enhancer.add_noise(img)
+        img = doc_enhancer.add_glitch(img)
+    except:
+        pass
+
     buf = BytesIO()
     img.save(buf, format="PNG")
     return buf.getvalue()
+
 
 
 # ============ VERIFIER ============
